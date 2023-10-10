@@ -1,0 +1,27 @@
+
+	Task: create a program that will help a farmer maintain his inventory.
+	 Find all the green apples and find all the apples that are heavier than 200g
+
+		create a class Apple
+		create instance variables color and weight
+		create a constructor to initialize the variables
+		encapsulate and override toString
+
+		create an interface ApplePredicate
+		create an abstract method test()
+			parameter: Apple
+			return: boolean
+
+		create a class AppleGreenColorPredicate
+		implement the ApplePredicate
+		implement test method to check for green color apples
+
+		create a class AppleHeavyPredicate
+		implement the ApplePredicate
+		implement test method to check for apples more than 200g
+
+		create a runner class
+		create an ArrayList of Apples
+		create a method to filter the apples based on a ApplePredicate argument
+			parameter: List<Apple>, ApplePredicate
+			return: List<Apple>
