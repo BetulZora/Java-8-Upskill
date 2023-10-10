@@ -5,8 +5,9 @@ public class Apple {
     private String color;
     private int weight;
 
-    public Apple(String color) {
+    public Apple(String color, int weight) {
         this.color = color;
+        this.weight = weight;
     }
 
     public String getColor() {
@@ -23,5 +24,13 @@ public class Apple {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "Apple{" +
+                "color='" + color + '\'' +
+                ", weight=" + weight +
+                '}';
     }
 }
