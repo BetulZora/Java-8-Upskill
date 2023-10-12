@@ -1,11 +1,10 @@
 package day2_functionalInterfaces;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.function.*;
 
 public class FunctionalInterfaceExamples {
     public static void main(String[] args) {
@@ -60,13 +59,60 @@ public class FunctionalInterfaceExamples {
         subNames.accept(names, 3);
 
         System.out.println(" Using HashMaps/BiConsumer ====================================");
+        System.out.println(" the forEach() method is in Iterable but Maps has a similar method\nWith the same name");
+        Map<String, String> holidays = new HashMap<>();
+        holidays.put("July", "Independence Day");
+        holidays.put("September", "Labor Day");
+        holidays.put("May", "Memorial Day");
+
+        holidays.forEach((k,v) -> System.out.println(k + " " + v));
 
 
+        System.out.println("---------Function-----------------");
+        // two generics, first, accepting type, second return type
+        // apply
+
+        Function<String, Integer> countVowels = word -> {
+            String vowels = "aeiou";
+          int count = 0;
+          for(char each :word.toCharArray()){
+              if(vowels.contains(each+"")){
+                  count++;
+              }
+          }
+          return count; // need return statement if more than one line
+        };
+
+        System.out.println(countVowels.apply("Wooden Spoon"));
+
+        System.out.println("Perform a Conversion with Function");
+        // invert int[] to a List
+        Function<int[], List<Integer>> toList = arr -> {
+          List<Integer> list = new ArrayList<>();
+          for(int each: arr){
+              list.add(each);
+          }
+          return list;
+        };
+
+        int[] a = {6,5,3,2,1};
+
+        List<Integer> aList = toList.apply(a);
+        System.out.println(aList);
+
+        System.out.println("---------Supplier-----------------");
+        // One generic, no parameter, have a return type
+        // Example, get the day of the week
+        Supplier<String> getDay = () -> LocalDate.now().getDayOfWeek().name();
+        System.out.println("getDay.get() = " + getDay.get());
+
+        Supplier<String> getDateTime = () -> LocalDateTime.now().format(DateTimeFormatter.ofPattern("M/d/y h:m a"));
+        System.out.println(getDateTime.get());
 
 
-
-
-
+        // Get Random Number
+        Supplier<Integer> getRandomNumber = () -> new Random().nextInt(1001);
+        System.out.println("getRandomNumber.get() = " + getRandomNumber.get());
 
 
     }
