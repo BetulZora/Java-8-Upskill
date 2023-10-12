@@ -3,6 +3,7 @@ package day2_functionalInterfaces;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -43,6 +44,22 @@ public class FunctionalInterfaceExamples {
         System.out.println();
         names.forEach(s-> System.out.println(s.charAt(0) + " " + s));
 
+        System.out.println("---------BiConsumer-----------------");
+        // accept method
+
+        BiConsumer<Integer, Integer> sum = (x,y) -> System.out.println(x+y);
+        sum.accept(4,5);
+
+        BiConsumer<List<String>, Integer> subNames = (listOfNames, end) -> {
+            for (String each: listOfNames) {
+                System.out.println(each.substring(0,end));
+
+            }
+        };
+
+        subNames.accept(names, 3);
+
+        System.out.println(" Using HashMaps/BiConsumer ====================================");
 
 
 
