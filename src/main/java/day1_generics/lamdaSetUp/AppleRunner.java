@@ -15,6 +15,8 @@ public class AppleRunner {
         System.out.println(filterApples(inventory, new AppleGreenColorPredicate()).toString());
         System.out.println("HEAVY APPLES");
         System.out.println(filterApples(inventory, new AppleHeavyPredicate()).toString());
+        System.out.println("Find the purple Apples");
+        System.out.println(filterApples(inventory, apple -> apple.getColor().toLowerCase().equals("purple")));
 
 
     }
