@@ -52,7 +52,7 @@ Stream
 			parameter: int // number of element to be kept
 			ex: limit(1);
 
-		.skip(): allows to skip a certain number of elements from the data structure
+		.skip(): allows to skip a certain number of elements from the structure
 			parameter: int // number of element that will be skipped
 			ex: skip(3); // skips the first 3 elements
 

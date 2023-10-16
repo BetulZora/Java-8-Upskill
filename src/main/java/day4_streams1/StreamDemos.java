@@ -2,6 +2,7 @@ package day4_streams1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,42 @@ public class StreamDemos {
                 .filter(p -> p<4)
                 .limit(6)
                 .forEach(System.out::println);
+
+        System.out.println("\n------------------------------skip with an integer" +
+                "\nSkip some amount of elements");
+        list.stream()
+                .filter(p -> p%2 == 0)
+                .distinct()
+                .skip(2)
+                .forEach(System.out::println);
+
+        System.out.println("\n------------------------------can use skip and limit together");
+        list.stream()
+                .skip(4)
+                .limit(3)
+                .forEach(System.out::println);
+
+        System.out.println("\n------------------------------map with a Function");
+        list.stream()
+                .map(m -> m*2)
+                .forEach(System.out::println);
+
+        System.out.println("\n------------------------------take first 6 and square values");
+        list.stream()
+                .limit(6)
+                .map(m -> m*m)
+                .forEach(System.out::println);
+
+        System.out.println("\n------------------------------sorted ascending by default");
+        list.stream()
+                .sorted()
+                .forEach(System.out::println);
+
+        System.out.println("\n------------------------------sorted with Comparator");
+        list.stream()
+                .sorted(Comparator.reverseOrder())
+                .forEach(System.out::println);
+
 
 
 
