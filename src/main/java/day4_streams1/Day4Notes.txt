@@ -1,0 +1,105 @@
+Java 8 Upskill
+
+10/16/2023
+
+Day 4: Streams
+
+------------------------------------------------------------------------
+
+Stream
+
+	streams are helpful when some actions need to be done to data
+
+	not a data structure
+	added in Java 8 after lambda
+		java.util.stream
+
+	stream pipeline:
+
+		stream source -> intermediate operations -> terminal operations
+
+------------------------------------------------------------------------
+
+	creating a Stream (stream source)
+
+		from array:
+			Arrays.stream() with the array as the argument
+
+		from List:
+			call .stream() method from List object
+
+		from values:
+			Stream.of() method can be used to directly pass values
+				-> will not be as helpful as the other 2
+
+------------------------------------------------------------------------
+
+	intermediate operations: methods that perform some function and return a Stream
+		- because the Stream is returned it allows for chaining
+
+		note: these method doesn't change the original data structure that is providing the data
+
+		.filter(): allow you to filter some specific elements
+			parameter: Predicate
+				// reminder: lambda is used to give implementation for functional interface
+			ex: filter(p -> p % 2 == 0);
+
+		.distinct(): remove any duplicates
+			parameter: none
+			ex: distinct();
+
+		.limit(): only keeps a certain number of elements
+			parameter: int // number of element to be kept
+			ex: limit(1);
+
+		.skip(): allows to skip a certain number of elements from the data structure
+			parameter: int // number of element that will be skipped
+			ex: skip(3); // skips the first 3 elements
+
+		.map(): allows to run a function on all the elements
+			parameter: Function
+			ex: map(p -> p * 10);
+
+		.sorted(): sorts the elements
+			parameter: none, or Comparator
+			ex: sorted(Comparator.comparing(Person::getAge()));
+
+------------------------------------------------------------------------
+
+	terminal operation methods: allows the Stream to be ended by returning a different type
+
+        .forEach(): iterates through the elements and performs the given Consumer
+
+        .count(): returns the number(long) of elements in the Stream
+
+        .allMatch(): checks if all elements match the defined lambda
+            parameter: Predicate
+            returns boolean
+
+        .anyMatch(): checks if at least one element matches the given Predicate
+            parameter: Predicate
+            returns boolean
+
+        .noneMatch(): checks if no element match the defined lambda
+            parameter: Predicate
+            returns boolean
+
+	---------------------------------------
+
+	Task:	given a list of words print the number of characters for each word
+
+	---------------------------------------
+
+	Task
+		create a class Entree with instance variables: name, calories, is vegetarian
+		create a List of Entree and go through these mini tasks:
+
+		print all the dishes that are less than 400 calories
+		print the length of each entree's name
+		print the first 3 dish names that are vegetarian
+		print all the dish names that are below 500 calories in a sorted order
+		print the three highest calories entree's name
+
+	---------------------------------------
+
+------------------------------------------------------------------------
