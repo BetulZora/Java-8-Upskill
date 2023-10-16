@@ -3,6 +3,7 @@ package day4_streams1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StreamDemos {
 
@@ -32,8 +33,17 @@ public class StreamDemos {
                 .distinct()
                 .forEach(System.out::println);
 
+        System.out.println("\n------------------------------limit with an integer");
+        list.stream().filter(p->p%2==0)
+                .distinct()
+                .limit(3)
+                .forEach(System.out::println);
 
-
+        System.out.println("\n------------------------------First 6 nums less than 4");
+        list.stream()
+                .filter(p -> p<4)
+                .limit(6)
+                .forEach(System.out::println);
 
 
 
