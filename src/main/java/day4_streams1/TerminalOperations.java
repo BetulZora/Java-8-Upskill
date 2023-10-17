@@ -8,6 +8,7 @@ public class TerminalOperations {
         //TODO: import first few lines
 
 
+
         // Given a String, count the number of unique chars in the String
         String str = "aaaaaaabbbbbbcccccddddddeeeefffffaaaabbbbccddd";
         str.chars() // returns a stream
