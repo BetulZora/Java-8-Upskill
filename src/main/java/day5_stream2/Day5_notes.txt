@@ -65,6 +65,12 @@ Testing examples
             .map(WebElement::getText)
             .collect(Collectors.toList());
 
+            OR
+            items.stream().map(element -> element.getAttribute("price"))
+                .map(Double::parseInt())
+                .sorted()
+                .collect(Collectors.toList())
+
         List<String> afterSort = items.stream()
             .map(WebElement::getText)
             .sorted()
@@ -76,14 +82,14 @@ Testing examples
         boolean validPrices = Driver.getDriver().findElements(By.id("n")).stream()
                 .map(e -> e.getAttribute("price"))
                 .map(Integer::parseInt)
-                .allMatch(p -> p > 0);
+                .allMatch(p -> p > 0); // Or any other requirements for prices
 
         Assert.assertTrue(validPrices);
 
     - reading from an excel
         having a List of headers and the information from a row in a List
 
-        Map<String, Object> map = IntStream.range(0, maxRow)
+        Map<String, Object> map = IntStream.range(0, maxRow) // use IntStream.range like rangeOf in Python
                 .boxed()
                 .collect(Collectors.toMap(headersList::get, rowList::get));
 
@@ -110,7 +116,7 @@ Testing examples
                     }
                 }).collect(Collectors.toList());
 
-    - database get all the data as a List<Map<String, Object>
+    - database get all the data as a List<Map<String, Object>>
         if you have a method getRowMap that returns Map<String,Object> with data of each row
 
         public static List<Map<String, Object>> getAllRowAsListOfMap()) {
