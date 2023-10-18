@@ -5,8 +5,14 @@ import java.util.Arrays;
 public class TerminalOperations {
     public static void main(String[] args) {
 
-        //TODO: import first few lines
+        String[] names = {"Val", "Betul", "Ercan", "Nihan", "Huong"};
+        Arrays.stream(names)
+                .filter(p -> p.contains("a"))
+                .forEach(System.out::println);
 
+        System.out.println(Arrays.stream(names)
+                .filter(p -> p.contains("a"))
+                .count()); // count returns a long for the number of elements - it stops the Stream
 
 
         // Given a String, count the number of unique chars in the String
