@@ -1,0 +1,159 @@
+Java 8 Upskill
+
+10/18/23
+
+Day 5: Stream
+
+------------------------------------------------------------------------
+
+Terminal Operations
+
+    stream pipeline:
+
+        stream source -> intermediate operations -> terminal operations
+
+    terminal operation methods: allows the Stream to be ended
+
+        .toArray(): returns an array of the elements
+
+        .collect(): using a Collector it possible to convert to a certain type. We will mainly use it for Collection types
+            parameter: Collector
+
+------------------------------------------------------------------------
+
+Collectors
+
+    Collectors is a utility class that have implementations of the Collector interface
+
+    streams have a collect() method
+
+    Collector methods:
+
+        .toCollection(Supplier): returns a collection based on the given Supplier
+            ex: .toCollection(ArrayList::new)
+            ex: .toCollection(HashSet::new)
+
+        .toList(): returns a List
+
+        .toSet(): returns a Set
+
+        .toMap(): returns a Map
+            Ex: .toMap(key, value)
+
+        .groupingBy(): accepts a Function parameter and returns a Map. The key is based on the given Function and the value is based on the stream source. This method will group similar data together based on the given Function
+
+------------------------------------------------------------------------
+
+Testing examples
+
+    - text from webelements
+    * You may have had a utility method for this that used a for each loop and next List
+
+        List<String> textValues = webElements.stream()
+            .map(WebElement::getText)
+            .collect(Collectors.toList());
+
+    - to assert a page header or dropdown options
+
+        webElements.stream()
+        .map(WebElement::getAttribute)
+
+    - sort the items based on filters
+        List<WebElement> items = driver.findElements(By.id("items"));
+
+        List<String> beforeSort = items.stream()
+            .map(WebElement::getText)
+            .collect(Collectors.toList());
+
+        List<String> afterSort = items.stream()
+            .map(WebElement::getText)
+            .sorted()
+            .collect(Collectors.toList());
+
+         Assert.assertEquals(beforeSort, afterSort)
+
+    - verify if all the price are valid
+        boolean validPrices = Driver.getDriver().findElements(By.id("n")).stream()
+                .map(e -> e.getAttribute("price"))
+                .map(Integer::parseInt)
+                .allMatch(p -> p > 0);
+
+        Assert.assertTrue(validPrices);
+
+    - reading from an excel
+        having a List of headers and the information from a row in a List
+
+        Map<String, Object> map = IntStream.range(0, maxRow)
+                .boxed()
+                .collect(Collectors.toMap(headersList::get, rowList::get));
+
+    - database get column names, where rsmd is ResultSetMetaData
+
+        IntStream.range(1, getColumnCount() + 1) // the number of columns
+                .mapToObj(index -> {
+                    try {
+                        return rsmd.getColumnName(index);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+
+    - database get row of data as a List of String
+
+        List<String> data = IntStream.range(1, getColumnCount() + 1)
+                .mapToObj(i -> {
+                    try {
+                        return rs.getString(i);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).collect(Collectors.toList());
+
+    - database get all the data as a List<Map<String, Object>
+        if you have a method getRowMap that returns Map<String,Object> with data of each row
+
+        public static List<Map<String, Object>> getAllRowAsListOfMap()) {
+            return IntStream.rangeClosed(1, getRowCount())
+                    .mapToObj(DB_Util::getRowMap) // gets each Map object per row
+                    .collect(Collectors.toList());
+        }
+
+    - api verification with db
+
+        may have done:
+            JsonPath jp = apiData.jsonPath();
+            Map<String, Object> APIUser=new LinkedHashMap<>();
+            APIUser.put("id",jp.getString("id"));
+            APIUser.put("full_name",jp.getString("full_name"));
+            APIUser.put("email",jp.getString("email"));
+            APIUser.put("password",jp.getString("password"));
+            APIUser.put("user_group_id",jp.getString("user_group_id"));
+            APIUser.put("image",jp.getString("image"));
+            APIUser.put("extra_data",jp.getString("extra_data"));
+            APIUser.put("status",jp.getString("status"));
+            APIUser.put("is_admin",jp.getString("is_admin"));
+            APIUser.put("start_date",jp.getString("start_date"));
+            APIUser.put("end_date",jp.getString("end_date"));
+            APIUser.put("address",jp.getString("address"));
+
+        but with streams:
+
+            String[] fields = {
+                    "id", "full_name", "email", "password",
+                    "user_group_id", "image", "extra_data",
+                    "status", "is_admin", "start_date", "end_date", "address"
+            };
+
+            Map<String, Object> APIUser = Arrays.stream(fields)
+                    .collect(Collectors.toMap(
+                            fieldName -> fieldName,
+                            jp::getString //fieldName -> jp.getString(fieldName)
+                    ));
+
+        Assert.assertEquals(APIUser,DBUser);
+
+------------------------------------------------------------------------
+
+
+
